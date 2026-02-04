@@ -1,0 +1,37 @@
+services:
+  converter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # Ajustez ces IDs si vous n'êtes pas l'utilisateur 1000 sur Linux
+        # (Tapez `id` dans votre terminal pour vérifier)
+        USER_ID: 1001
+        GROUP_ID: 1001
+        USER_NAME: coder
+    image: jmbatto/juliabench:latest
+    container_name: julia_c_lab
+    
+    # Montage du dossier courant (votre code) dans le conteneur
+    volumes:
+      - ./:/home/engineer/project
+      # Montage du socket X11 pour l'affichage graphique (Linux)
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /var/run/docker.sock:/var/run/docker.sock
+      - usrlocalvar-foo:/usr/local/var
+    # Configuration de l'affichage
+    environment:
+      - DISPLAY=${DISPLAY}
+      # PDI_CONF peut être utile plus tard pour pointer vers vos fichiers .yml
+      - PDI_ERR_handler=abort
+    
+    # Pour le débogage C (ptrace) et l'accès réseau si nécessaire
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    # Garde le conteneur actif
+    tty: true
+    stdin_open: true
+volumes:
+  usrlocalvar-foo:
