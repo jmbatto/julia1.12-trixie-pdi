@@ -22,9 +22,9 @@ services:
     # Configuration de l'affichage
     environment:
       - DISPLAY=${DISPLAY}
+      - ENV PYTHONPATH=/usr/local/lib/python3/dist-packages
       # PDI_CONF peut être utile plus tard pour pointer vers vos fichiers .yml
       - PDI_ERR_handler=abort
-    
     # Pour le débogage C (ptrace) et l'accès réseau si nécessaire
     cap_add:
       - SYS_PTRACE
