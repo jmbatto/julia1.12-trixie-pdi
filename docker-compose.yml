@@ -11,7 +11,6 @@ services:
         USER_NAME: coder
     image: jmbatto/juliabench:latest
     container_name: julia_c_lab
-    
     # Montage du dossier courant (votre code) dans le conteneur
     volumes:
       - ./:/home/engineer/project
